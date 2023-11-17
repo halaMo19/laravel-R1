@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\ExcarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 // Route::get('test', function(){
 //     return 'Welcome to my first route';
 // });
@@ -95,27 +96,56 @@ Route::prefix('Support')->group(function() {
     
     
 
-    Route::prefix('Training')->group(function() {
+    // Route::prefix('Training')->group(function() {
     
-        Route::get('/', function () {
+    //     Route::get('/', function () {
     
-            return 'Training home page';
-        });
+    //         return 'Training home page';
+    //     });
     
-        Route::get('HR', function () {
+    //     Route::get('HR', function () {
     
-            return 'HR page';
-        });
-        Route::get('ICT', function () {
-            return 'ICT page';
-        });
-        Route::get('Marketing', function () {
-            return 'Marketing page';
-        });
-        Route::get('Logistics', function () {
-                    return 'Logistics page';
-            });
+    //         return 'HR page';
+    //     });
+    //     Route::get('ICT', function () {
+    //         return 'ICT page';
+    //     });
+    //     Route::get('Marketing', function () {
+    //         return 'Marketing page';
+    //     });
+    //     Route::get('Logistics', function () {
+    //                 return 'Logistics page';
+    //         });
     
-    });
+
+    //        Route::fallback( function () {
+    //             return redirect('/');
+
+    // });
 
 
+    Route::get('cv', function () {
+        return  view('cv');
+});
+Route::get('login', function () {
+    return  view('login');
+});
+
+// Route::get('cv', function () {
+//     return  view('cv');
+// });
+Route::post('receive', function () {
+    return  'Data received';
+})->name('receive');
+
+Route::get('test1', [ExampleController::class,'test1']);
+
+Route::get('car', function () {
+    return  view('car');
+});
+Route::post('test', function () {
+    return  'Data test';
+})->name('test1');
+Route::get('car', [ExcarController::class,'car']);
+
+Route::post('addcar', [ExcarController::class,'addcar'])->name('car');
