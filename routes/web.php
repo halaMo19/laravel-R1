@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\ExcarController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\NewsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -148,4 +150,11 @@ Route::post('test', function () {
 })->name('test1');
 Route::get('car', [ExcarController::class,'car']);
 
-Route::post('addcar', [ExcarController::class,'addcar'])->name('car');
+// Route::post('addcar', [ExcarController::class,'addcar'])->name('car');
+// Route::get('addcar', [CarController::class,'store']);
+
+Route::get('AddNEWS', [NewsController::class,'create']);
+Route::post('StoreNEWS', [NewsController::class,'store'])->name('NEWS');
+
+Route::get('AddCAR', [CarController::class,'create']);
+Route::post('StoreCAR', [CarController::class, 'store'])->name('car');

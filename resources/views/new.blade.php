@@ -10,25 +10,26 @@
 <body>
 
 <div class="container mt-3">
-  <h2>Add Car</h2>
-  <form action="{{route('car')}}" method="post">
+  <h2>NEWS</h2>
+  <form action="{{route('NEWS')}}" method="post">
   @csrf
     <div class="mb-3 mt-3">
       <label for="Title">Title</label>
       <input type="text" class="form-control" id="Title" placeholder="Enter Title" name="Title">
     </div>
     <div class="mb-3">
-      <label for="pwd">Price</label>
-      <input type="number" class="form-control" id="pwd" placeholder="Enter Price" name="Price">
+      <label for="author">Author</label>
+      <input type="text" class="form-control" id="author" placeholder="Enter Author" name="Author">
     </div>
     
     <div class="mb-3 mt-3">
-      <label for="comment">Description</label>
-      <textarea class="form-control" rows="5" id="comment" name="Text"></textarea>
+      <label for="content">Content</label>
+      <textarea class="form-control" rows="5" id="content" name="Content"></textarea>
     </div>
+
     <div class="form-check mb-3">
       <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" name="Published"> Remember me
+        <input class="form-check-input" type="checkbox" name="Published"> Published
       </label>
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
