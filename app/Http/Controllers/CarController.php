@@ -12,16 +12,20 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        $cars = Car::get();
+       return view("cars",compact("cars"));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function edit(string $id)
     {
         //
-        return view('car');
+         $car = Car::findOrFail($id);
+         return  view ('updateCar',compact('car'));
+
+        //return view('car');
     }
 
     /**
@@ -55,13 +59,7 @@ class CarController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
