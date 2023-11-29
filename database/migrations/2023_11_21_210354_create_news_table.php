@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 return new class extends Migration
 {
     /**
@@ -13,10 +12,10 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->string('newTitle',100);
+            $table->string('Title',100);
             $table->text('content');
             $table->boolean('published');
-            $table->string('author', 50);
+            $table->string('author',100);
             $table->timestamps();
         });
     }

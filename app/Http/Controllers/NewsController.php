@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
-
+use GuzzleHttp\Client;
 
 class NewsController extends Controller
 {
+    private $columns = ['Title','content','author','published'];
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('news');
-        $new = news::get();
+        $news =News ::get();
 
-       return view("new",compact("new"));
+        return view('news',compact('news'));
     }
 
     /**
@@ -25,7 +25,7 @@ class NewsController extends Controller
     public function create()
     {
         //
-        return view('new');
+        return view('addNews');
     }
 
     /**
@@ -33,21 +33,21 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $new = new News();
-
-        $new->newTitle = $request->Title;
-        $new->author = $request->Author;
-        $new->content = $request->Content;
-        
-        if(isset($request->Published)) {
-            $new->published = true;
-        } else {
-            $new->published = false;
+        $news = new News();
+        $news->Title = $request->Title;
+        $news->content = $request->content;
+        $news->author = $request->author;
+        $published =$request->published;
+        if($published){
+            $news->published=true;
         }
+        else{
+            $news->published=false;
+        }
+         
 
-        $new->save();
-
-        return "News added successfully";
+        $news->save();
+        return "news data added successfully";
 
     }
 
@@ -56,6 +56,8 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
+        $news = News ::findOrFail($id);
+        return view('newsDetails',compact('news'));
         //
     }
 
@@ -64,9 +66,9 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
-        $new = New::findOrFail($id);
-        return  view ('updateCar',compact('new'));
-
+        $news = News::findOrFail( $id);
+        return view('updateNews',compact('news'));
+        //
     }
 
     /**
@@ -74,7 +76,13 @@ class NewsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true:false;
+
+        News::where('id', $id)->update($data);
+
+      
+         return "Data Updated Successfully";
     }
 
     /**
@@ -82,6 +90,7 @@ class NewsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        news::where('id',$id)->delete();
+        return 'Data Deleted Successfully';
     }
 }

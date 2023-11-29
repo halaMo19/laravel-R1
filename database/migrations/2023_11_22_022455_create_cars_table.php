@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 50);
-            $table->float('price');
+            $table->string('carTitle', 100);
             $table->text('description');
             $table->boolean('published');
             $table->timestamps();

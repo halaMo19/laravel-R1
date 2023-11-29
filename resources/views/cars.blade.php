@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Car List</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -11,7 +11,7 @@
 <body>
 
 <div class="container">
-  <h2>Hover Rows</h2>
+  <h2>List</h2>
   <p>The .table-hover class enables a hover state on table rows:</p>            
   <table class="table table-hover">
     <thead>
@@ -20,34 +20,27 @@
         <th>Content</th>
         <th>Published</th>
         <th>Edit</th>
+        <th>Show</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-        @foreach($cars as $car)
+@foreach($cars as $car)        
       <tr>
-        <td>{{$car->title}}</td>
-        <td>{{$car->description}}</td>
-        
-        @if($car->published=== 1)
-        <td>yes</td>
-        @else
-        <td>no</td>
-        @endif
-
-        <td><a href="editcar/{{$car->id}}">Edit</a></td>
-        
+        <td>{{ $car->carTitle }}</td>
+        <td>{{ $car->description }}</td>
+        <td>
+            @if($car->published)
+                Yes
+            @else
+                No
+            @endif
+        </td>
+        <td><a href="editCar/{{ $car->id }}">Edit</a></td>
+        <td><a href="carDetails/{{ $car->id }}">Show</a></td>
+        <td><a href="deleteCar/{{ $car->id }}">Delete</a></td>
       </tr>
-      @endforeach
-      <!-- <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr> -->
+@endforeach     
     </tbody>
   </table>
 </div>
