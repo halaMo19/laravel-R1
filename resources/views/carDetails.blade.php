@@ -9,6 +9,7 @@
     Car title: {{  $car->carTitle }}
     <br>
     Car Description: {{  $car->description }}
-     
+    <br>
+    Price: 
 </body>
 </html>

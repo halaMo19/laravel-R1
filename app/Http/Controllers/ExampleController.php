@@ -10,4 +10,12 @@ class ExampleController extends Controller
         return view("login");
     }
 
+    public function login(){
+        return view('login');
+    }
+
+    public function received(Request $request){
+        $msg = "Your email is: " . $request->email . "<br> and Password is: " . $request->pwd;
+        return $msg;
+    }
 }

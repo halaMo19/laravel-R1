@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Car;
+use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsRedirected;
 
 class CarController extends Controller
 {
@@ -32,16 +33,25 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $cars = new Car;
-        $cars->carTitle = $request->title;
-        $cars->description = $request->description;
-        if(isset($request->published)){
-            $cars->published = true;
-        }else{
-            $cars->published = false;
-        }
-        $cars->save();
-        return "Car data added successfully";
+        // $cars = new Car;
+        // $cars->carTitle = $request->title;
+        // $cars->description = $request->description;
+        // if(isset($request->published)){
+        //     $cars->published = true;
+        // }else{
+        //     $cars->published = false;
+        // }
+        // $cars->save();
+
+        $data = $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true : false;
+
+        $request->validate([
+            'carTitle'=>'required|string',
+            'description'=>'required|string|max:100',
+        ]);
+        Car::create($data);
+        return'done';
     }
 
     /**
@@ -68,20 +78,32 @@ class CarController extends Controller
     public function update(Request $request, string $id)
     {
 
-        $data = $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true:false;
+        // $data = $request->only($this->columns);
+        // $data['published'] = isset($data['published'])? true:false;
 
-        Car::where('id', $id)->update($data);
-        return "Data Updated Successfully";
+        // Car::where('id', $id)->update($data);
 
+        Car::where('id', $id)->update($request->only($this->columns));
+        return 'Updated';
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         Car::where('id', $id)->delete();
-        return 'deleted';
+        return redirect('cars');
+    }
+
+    public function trashed(){
+        $cars = Car::onlyTrashed()->get();
+        return view('trashed', compact('cars'));
+    }
+
+    public function restore(string $id): RedirectResponse
+    {
+        Car::where('id', $id)->restore();
+        return redirect('cars');
     }
 }

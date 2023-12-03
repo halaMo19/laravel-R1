@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
-use App\Http\Controllers\NewsController;
-
 use App\Http\Controllers\PostsController;
 
 /*
@@ -79,6 +77,9 @@ Route::post('storeCar',[CarController::class, 'store'])->name('storeCar');
 
 Route::get('addCar',[CarController::class, 'create']);
 
+Route::get('trashed',[CarController::class, 'trashed']);
+Route::get('restoreCar/{id}',[CarController::class, 'restore']);
+
 Route::get('cars', [CarController::class, 'index']);
 
 Route::get('editCar/{id}', [CarController::class, 'edit']);
@@ -88,6 +89,8 @@ Route::get('deleteCar/{id}', [CarController::class, 'destroy']);
 Route::get('carDetails/{id}', [CarController::class, 'show'])->name('carDetails');
 
 Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar');
+
+
 
 
 
@@ -109,4 +112,9 @@ Route::get('deleteNews/{id}', [NewsController::class, 'destroy']);
  
 Route::get('newsDetails/{id}', [NewsController::class, 'show']);
  
+Route::get('trashednew',[NewsController::class, 'trashednew']);
+Route::get('restorenew/{id}',[NewsController::class, 'restore']);
+
+
+Route::get('deletenew/{id}',[NewsController::class, 'deletee']);
 
