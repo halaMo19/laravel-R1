@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use App\Traits\Common;
+
 use App\Models\Car;
+
 use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsRedirected;
+
 
 class CarController extends Controller
 {
+    use Common;
     private $columns = ['carTitle', 'description','published'];
 
     /**
@@ -43,15 +48,36 @@ class CarController extends Controller
         // }
         // $cars->save();
 
-        $data = $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true : false;
+        // $data = $request->only($this->columns);
+        // $data['published'] = isset($data['published'])? true : false;
 
-        $request->validate([
-            'carTitle'=>'required|string',
-            'description'=>'required|string|max:100',
-        ]);
-        Car::create($data);
-        return'done';
+        // $request->validate([
+        //     'carTitle'=>'required|string',
+        //     'description'=>'required|string|max:100',
+        // ]);
+        // Car::create($data);
+        // return'done';
+        $messages=[
+            'carTitle.required'=>'Title is required',
+            'description.required'=>'Tshould de text',
+        ];
+        $date=$request->validate([
+                'carTitle'=>'required|string',
+                'description'=>'required|string',
+                'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],$messages);
+
+            $fileName = $this->uploadfile($request->image,'assets/images');
+            $date['image']=$fileName;
+            $date['published']=isset($request['published']);
+            Car::create($date);
+            // Car::create($data);
+             return'done'; 
+
+            // $date['published']=isset($request['published'])? 1:0;
+            // Car::create($date);
+            // return'done'; 
+
     }
 
     /**
@@ -83,8 +109,29 @@ class CarController extends Controller
 
         // Car::where('id', $id)->update($data);
 
+        
+
+        $messages=[
+            'carTitle.required'=>'Title is required',
+            'description.required'=>'Tshould de text',
+        ];
+        $date=$request->validate([
+                'carTitle'=>'required|string',
+                'description'=>'required|string',
+                'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],$messages);
+
+            $fileName = $this->uploadfile($request->image,'assets/images');
+            $date['image']=$fileName;
+            $date['published']=isset($request['published']);
+            Car::create($date);
+            // Car::create($data);
+             return'done'; 
+
+
         Car::where('id', $id)->update($request->only($this->columns));
         return 'Updated';
+
     }
 
     /**

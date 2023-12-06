@@ -94,6 +94,12 @@ Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar'
 
 
 
+Route::get('showUpload', [ExampleController::class, 'showUpload']);
+Route::post('Upoad',[ExampleController::class, 'Upload'])->name('upload');
+
+
+
+
 
 // add news
 Route::get('addNews', [NewsController::class, 'create']);  

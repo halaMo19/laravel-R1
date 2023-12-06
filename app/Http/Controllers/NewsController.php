@@ -58,8 +58,26 @@ class NewsController extends Controller
             'Title'=>'required|string',
             'description'=>'required|string|max:100',
         ]);
-        news::create($data);
+        News::create($data);
         return'done';
+
+
+
+
+        $messages=[
+            'Title.required'=>'Title is required',
+            'author.required'=>'should de text',
+        ];
+        $date=$request->validate([
+                'Title'=>'required|string',
+                'author'=>'required|string',
+                'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],$messages);
+
+            $fileName = $this->uploadfile($request->image,'assets/images');
+            $date['image']=$fileName;
+            $date['published']=isset($request['published']);
+            News::create($date);
     }
 
 
@@ -70,7 +88,7 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-        $news = News ::findOrFail($id);
+        $news = News::findOrFail($id);
         return view('newsDetails',compact('news'));
         //
     }
@@ -97,6 +115,26 @@ class NewsController extends Controller
 
       
          return "Data Updated Successfully";
+
+
+
+         $messages=[
+            'Title.required'=>'Title is required',
+            'author.required'=>'Tshould de text',
+        ];
+        $date=$request->validate([
+                'Title'=>'required|string',
+                'author'=>'required|string',
+                'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],$messages);
+
+            $fileName = $this->uploadfile($request->image,'assets/images');
+            $date['image']=$fileName;
+            $date['published']=isset($request['published']);
+            News::create($date);
+            // News::create($data);
+             return'done'; 
+
     }
 
     /**
@@ -105,31 +143,25 @@ class NewsController extends Controller
 
      public function destroy(string $id): RedirectResponse
     {
-        news::where('id', $id)->delete();
+        News::where('id', $id)->delete();
         return redirect(' News');
     }
 
     public function trashednew(){
-        $news = news::onlyTrashed()->get();
+        $news = News::onlyTrashed()->get();
         return view('trashednew', compact(' News'));
-    }
-    
-    public function restore(string $id): 
-    {
-        news::where('id',$id)->delete();
-        return 'Data Deleted Successfully';
     }
 
 
     public function restore(string $id): RedirectResponse
     {
-        news::where('id', $id)->restore();
+        News::where('id', $id)->restore();
         return redirect('News');
     }
 
     public function delete(string $id): RedirectResponse
     {
-        news::where('id', $id)->fordelete();
+        News::where('id', $id)->forcedelete()();
         return redirect('trashednew');
     }
 
