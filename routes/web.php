@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\PostsController;
 
 /*
@@ -68,10 +69,17 @@ Route::get('cv',function(){
 // })->name('receive');
 
 Route::get('login',[ExampleController::class, 'login']);
+Route::get('place',[ExampleController::class, 'place']);
+Route::get('blog',[ExampleController::class, 'blog']);
+Route::get('blog1',[ExampleController::class, 'blog1']);
 
 Route::post('receive',[ExampleController::class, 'received'])->name('receive');
 
 Route::get('test1',[ExampleController::class, 'test1']);
+
+Route::get('showUpload',[ExampleController::class, 'showUpload']);
+
+Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
 
 Route::post('storeCar',[CarController::class, 'store'])->name('storeCar');
 
@@ -82,45 +90,13 @@ Route::get('restoreCar/{id}',[CarController::class, 'restore']);
 
 Route::get('cars', [CarController::class, 'index']);
 
-Route::get('editCar/{id}', [CarController::class, 'edit']);
-
 Route::get('deleteCar/{id}', [CarController::class, 'destroy']);
 
 Route::get('carDetails/{id}', [CarController::class, 'show'])->name('carDetails');
 
+Route::get('editCar/{id}', [CarController::class, 'edit']);
 Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar');
 
-
-
-
-
-Route::get('showUpload', [ExampleController::class, 'showUpload']);
-Route::post('Upoad',[ExampleController::class, 'Upload'])->name('upload');
-
-
-
-
-
-// add news
-Route::get('addNews', [NewsController::class, 'create']);  
-Route::post('storenews', [NewsController::class, 'store'])->name('storenews');   
- 
-
-Route::get('showNews',[NewsController::class, 'index']);
-
- 
-Route::get('editNews/{id}', [NewsController::class, 'edit']);
-Route::put('updateNews/{id}', [NewsController::class, 'update'])->name('updateNews'); 
-
- 
-Route::get('deleteNews/{id}', [NewsController::class, 'destroy']); 
-
- 
-Route::get('newsDetails/{id}', [NewsController::class, 'show']);
- 
-Route::get('trashednew',[NewsController::class, 'trashednew']);
-Route::get('restorenew/{id}',[NewsController::class, 'restore']);
-
-
-Route::get('deletenew/{id}',[NewsController::class, 'deletee']);
-
+Route::get('placeIndex',[PlaceController::class, 'index']);
+Route::get('addPlace',[PlaceController::class, 'create']);
+Route::post('storePlace',[PlaceController::class, 'store'])->name('storePlace');

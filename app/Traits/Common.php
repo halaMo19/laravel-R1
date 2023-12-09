@@ -11,7 +11,3 @@ Trait Common {
 }
     
 ?>
-
-
-
-<!-- inside CarController -->كود كتابة traits

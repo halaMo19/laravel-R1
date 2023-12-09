@@ -16,27 +16,27 @@
         @csrf
         <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle" value="{{old('carTitle')}}">
+            <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle" value="{{ old('carTitle') }}">
             @error('carTitle')
-            <div class="carTitle">
-                {{$message}}
-                @enderror
+            <div class="alert alert-warning">
+                {{ $message }}
             </div>
+            @enderror
         </div>
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="number" class="form-control" id="price" placeholder="Enter Price" name="price">
+            <input type="number" class="form-control" id="price" placeholder="Enter Price" name="price" value="{{ old('price') }}">
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea class="form-control" rows="5" id="description" name="description" value="{{old('description')}}"></textarea>
+            <textarea class="form-control" rows="5" id="description" name="description">{{ old('description') }}</textarea>
             @error('description')
-            <div class="description">
                 {{ $message }}
             @enderror
-            </div>
         </div>
-        <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
             @error('image')
                 {{ $message }}
             @enderror

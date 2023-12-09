@@ -12,7 +12,7 @@
 
 <div class="container">
   <h2>Upload file image</h2>
-  <form class="form-horizontal" action="{{route('upload') }}" method="post" enctype="multipart/form-data">
+  <form class="form-horizontal" action="{{ route('upload') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
       <label class="control-label col-sm-2" for="image">Image:</label>
