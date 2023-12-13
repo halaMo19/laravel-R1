@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Place;
 use App\Traits\Common; 
 
@@ -25,6 +26,7 @@ class PlaceController extends Controller
     public function create()
     {
         //
+
         return view('addPlace');
     }
 
@@ -54,6 +56,11 @@ class PlaceController extends Controller
      */
     public function show(string $id)
     {
+
+
+        $place = Place::findORFail($id);
+
+        return view('showPlace', compact('place'));
         //
     }
 
@@ -75,9 +82,36 @@ class PlaceController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * 
+     * 
      */
     public function destroy(string $id)
     {
-        //
+
+
+       place::where('id', $id)->delete();
+        return redirect('place');
+      
+  //
+
     }
+
+
+
+    public function trashed(){
+        $cars =  place::onlyTrashed()->get();
+        return view('trashedPlace', compact('place'));
+    }
+    public function restore(string $id): RedirectResponse
+    {
+        place::where('id', $id)->restore();
+        return redirect('place');
+    }
+
+//     public function destroy(string $id) :RedirectResponse
+//     {
+//         Place::where('id', $id)->delete();;
+//         return redirect('place');
+// }
 }

@@ -100,3 +100,19 @@ Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar'
 Route::get('placeIndex',[PlaceController::class, 'index']);
 Route::get('addPlace',[PlaceController::class, 'create']);
 Route::post('storePlace',[PlaceController::class, 'store'])->name('storePlace');
+
+
+
+
+
+
+
+
+
+// ADD PLASE
+Route::get('show-place/{id}', [PlaceController::class, 'show'])->name('showPlace');
+Route::get('delete-place/{id}', [PlaceController::class, 'delete'])->name('deletePlace');
+Route::get('trashed-places', [PlaceController::class, 'getTrashed']);
+Route::get('trashed-places', [PlaceController::class, 'getTrashed']);
+Route::get('restore-place/{id}', [PlaceController::class, 'restore'])->name('restorePlace');
+Route::get('destroy /{id}', [PlaceController::class, 'delete'])->name('deletePlace');;
