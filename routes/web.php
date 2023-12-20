@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostsController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,3 +119,17 @@ Route::get('trashed-places', [PlaceController::class, 'getTrashed']);
 Route::get('trashed-places', [PlaceController::class, 'getTrashed']);
 Route::get('restore-place/{id}', [PlaceController::class, 'restore'])->name('restorePlace');
 Route::get('destroy /{id}', [PlaceController::class, 'delete'])->name('deletePlace');;
+Auth::routes(['verify' => true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+
+// <CONTACT>
+
+// Route::post('contact',[ContactController::class, 'email'])->name('emailForm');
+
+Route::get('contact-form',[ ContactController::class, 'email'])->name('contact-form');
+Route::post('sbject', [ContactController::class, 'message'])->name('sbject');

@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Car;
+use App\Models\Category;
 use App\Traits\Common; 
 use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsRedirected;
 
 class CarController extends Controller
 {
     use Common;
-    // private $columns = ['carTitle', 'description','published'];
+    private $columns = ['carTitle', 'description','published'];
 
     /**
      * Display a listing of the resource.
@@ -27,7 +28,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('addCar');
+        $categories = Category::select('id', 'categoryName')->get();
+        return view('addCar', compact('categories'));
     }
 
     /**
@@ -79,7 +81,8 @@ class CarController extends Controller
     public function edit(string $id)
     {
         $car = Car::findOrFail($id);
-        return view('updateCar',compact('car'));
+        $categories = Category::select('id', 'categoryName')->get();
+        return view('updateCar',compact('car', 'categories'));
     }
 
     /**
@@ -98,6 +101,7 @@ class CarController extends Controller
             'carTitle'=>'required|string',
             'description'=>'required|string',
             'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
+            'category_id' => 'required',
         ], $messages);
        
         $data['published'] = isset($request->published);
