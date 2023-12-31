@@ -48,7 +48,10 @@ class CarController extends Controller
             'carTitle'=>'required|string',
             'description'=>'required|string',
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            'category_id' => 'required',
         ], $messages);
+       
+        // <كودتحميل الصورةوالملفات_>
 
         $fileName = $this->uploadFile($request->image, 'assets/images');
         $data['image']= $fileName;
@@ -95,6 +98,7 @@ class CarController extends Controller
         // $data['published'] = isset($data['published'])? true:false;
 
         // Car::where('id', $id)->update($data);
+        // <سطر الرسالة بعرفة للفكشن الخاصة>
         $messages= $this->messages();
 
         $data = $request->validate([
@@ -137,6 +141,7 @@ class CarController extends Controller
         return redirect('cars');
     }
 
+// < كود خاص بتكرار الرسالة فى فكشن خاص لوحدة>
     public function messages(){
         return [
             'carTitle.required'=>'Title is required',

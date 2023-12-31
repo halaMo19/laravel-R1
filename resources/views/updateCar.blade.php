@@ -32,7 +32,8 @@
         <div class="form-group">
             <label for="image">Image:</label>
             <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
-            <img src="{{ asset('assets/images/'.$car->image) }}" alt="cars" style="width:150px;">
+            <!-- \\كودبيظهر الصورةعلى الصفحةمع الفروم -->
+            <img src="{{ asset('assets/images/'.$car->image) }}" alt="cars" style="width:150px;">    
             @error('image')
                 {{ $message }}
             @enderror

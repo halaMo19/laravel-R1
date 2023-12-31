@@ -5,33 +5,23 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use App\Models\Contact;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-
-class ContactFormMail extends Mailable
+class ContactMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    public array $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($date)
+    public function __construct(array $content)
     {
-        $this->data = $date;
-        //
+        $this->data = $content;
     }
-    public function build()
-    {
-        return $this->from($this->data['email'])
-                    ->subject('New Contact Form Submission')
-                    ->view('emails.contact-form');
-    }
-
 
     /**
      * Get the message envelope.
@@ -39,7 +29,8 @@ class ContactFormMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Form Mail',
+            from: new Address($this->data['email'], $this->data['name']),
+            subject: $this->data['subject'],
         );
     }
 
@@ -49,7 +40,10 @@ class ContactFormMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.contact-form',
+            markdown: 'contactMail',
+            with:[
+                'data' => $this->data,
+            ]
         );
     }
 

@@ -59,9 +59,7 @@ Route::prefix('product')->group(function(){
 //     return redirect('/');
 // });
 
-Route::get('cv',function(){
-    return view('cv');
-});
+
 
 // Route::get('login',function(){
 //     return view('login');
@@ -80,18 +78,21 @@ Route::post('receive',[ExampleController::class, 'received'])->name('receive');
 
 Route::get('test1',[ExampleController::class, 'test1']);
 
+Route::get('session',[ExampleController::class, 'mySession']);
+
+
 Route::get('showUpload',[ExampleController::class, 'showUpload']);
 
 Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
 
-Route::post('storeCar',[CarController::class, 'store'])->name('storeCar');
+// Route::post('storeCar',[CarController::class, 'store'])->name('storeCar');
 
-Route::get('addCar',[CarController::class, 'create']);
+// Route::get('addCar',[CarController::class, 'create']);
 
 Route::get('trashed',[CarController::class, 'trashed']);
 Route::get('restoreCar/{id}',[CarController::class, 'restore']);
 
-Route::get('cars', [CarController::class, 'index']);
+Route::get('cars', [CarController::class, 'index'])->middleware('verified');
 
 Route::get('deleteCar/{id}', [CarController::class, 'destroy']);
 
@@ -103,12 +104,6 @@ Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar'
 Route::get('placeIndex',[PlaceController::class, 'index']);
 Route::get('addPlace',[PlaceController::class, 'create']);
 Route::post('storePlace',[PlaceController::class, 'store'])->name('storePlace');
-
-
-
-
-
-
 
 
 
@@ -125,11 +120,34 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-
-
 // <CONTACT>
 
-// Route::post('contact',[ContactController::class, 'email'])->name('emailForm');
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
+        Route::get('contact',[ContactController::class, 'contact']);
+        Route::post('receiveContact',[ContactController::class, 'receiveContact'])->name('receiveContact');
+        Route::get('addCar',[CarController::class, 'create']);
+        Route::post('storeCar',[CarController::class, 'store'])->name('storeCar');
 
-Route::get('contact-form',[ ContactController::class, 'email'])->name('contact-form');
-Route::post('sbject', [ContactController::class, 'message'])->name('sbject');
+
+    });
+
+
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){ 
+        Route::get('contact-form',[ ContactController::class, 'email'])->name('contact-form');
+        Route::post('sbject', [ContactController::class, 'message'])->name('sbject');
+        Route::get('cv',function(){
+            return view('cv');
+        });
+    });
+
+    // Route::get('addCar',function(){
+    //     return view('addCar');
+    // });
