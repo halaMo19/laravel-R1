@@ -151,3 +151,16 @@ Route::group(
     // Route::get('addCar',function(){
     //     return view('addCar');
     // });
+
+    Route::group([
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function() {
+        // Route::get('create-contact-us',[ContactUSController::class, 'create']);
+        // Route::post('send-message',[ContactUSController::class, 'send'])->name('messageSent');
+    
+        // Route::get('add-car', [CarController::class, 'create']);
+        // Route::post('car-added', [CarController::class, 'store'])->name('car-added');
+    });
+    
+    

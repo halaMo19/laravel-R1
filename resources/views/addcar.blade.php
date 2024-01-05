@@ -7,65 +7,87 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        * {
+            direction:   {{__('addCar.page_direction')}};
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>{{ __('messages.Add Car') }}</h2>
-   <!-- <h2>{{ __('messages.Add Car') }}</h2> -->
-   <div>
-        <a href="{{ LaravelLocalization::getLocalizedURL('en') }}">English</a><br>
-        <a href="{{ LaravelLocalization::getLocalizedURL('ar') }}">Arabic</a>
+    <div class="text-center">
+        <hr>
+        <a href="{{ LaravelLocalization::getLocalizedURL('en') }}" class="btn" style="width: 150px; color:#fff;background-color: #ff545a">{{__('addCar.english')}}</a>
+        <a href="{{ LaravelLocalization::getLocalizedURL('ar') }}" style="width: 150px; color:#fff;background-color: #ff545a" class="btn">{{__('addCar.arabic')}}</a>
+        <hr>
     </div>
-   
+
+    <h2>{{__('addCar.pageTitle')}}</h2>
     <form action="{{route('storeCar')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label for="title">{{ __('messages.Title') }}</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter title" name="carTitle" value="{{ old('carTitle') }}">
-            @error('carTitle')
-            <div class="alert alert-warning">
-                {{ $message }}
+            <label for="title">{{__('addCar.titleLabel')}}</label>
+            <input type="text" class="form-control" id="title" placeholder="{{__('addCar.titlePlaceholder')}}" name="title" value="{{old('title')}}">
+
+            @error('title')
+            <div class="alert alert-danger">
+                {{$message}}
+            </div>
+            @enderror
+
+        </div>
+        <div class="form-group">
+            <label for="price">{{__('addCar.priceLabel')}}</label>
+            <input type="number" class="form-control" id="price" placeholder="{{__('addCar.pricePlaceholder')}}" name="price">
+            @error('price')
+            <div class="alert alert-danger">
+                {{$message}}
             </div>
             @enderror
         </div>
         <div class="form-group">
-            <label for="price">{{ __('messages.Price') }}</label>
-            <input type="number" class="form-control" id="price" placeholder="Enter Price" name="price" value="{{ old('price') }}">
-        </div>
-        <div class="form-group">
-            <label for="description">{{ __('messages.Description') }}</label>
-            <textarea class="form-control" rows="5" id="description" name="description">{{ old('description') }}</textarea>
+            <label for="description">{{__('addCar.descriptionLabel')}}</label>
+            <textarea class="form-control" rows="5" id="description" name="description">{{old('description')}}</textarea>
+
             @error('description')
-                {{ $message }}
+            <div class="alert alert-danger">
+                {{$message}}
+            </div>
+            @enderror
+
+        </div>
+
+        <div class="form-group">
+            <label for="category">{{__('addCar.categoryLabel')}}</label>
+            <select id="category" name="category_id">
+                <option value="">{{__('addCar.categorySelect')}}</option>
+                @foreach($categories as $category)
+                <option value="{{$category->id}}">{{$category->category_name}}</option>
+                @endforeach
+            </select>
+
+            @error('category_id')
+            <div class="alert alert-danger">
+               {{$message}}
+            </div>
             @enderror
         </div>
+
         <div class="form-group">
-            <label for="image">{{ __('messages.Image') }}</label>
+            <label for="image">{{__('addCar.imageTitle')}}</label>
             <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
             @error('image')
-                {{ $message }}
+            <div class="alert alert-danger">
+                {{$message}}
+            </div>
             @enderror
         </div>
-        <div class="form-group">
-            <label for="shortDescription">{{ __('messages.Short Description') }}</label>
-            <input type="text" class="form-control" id="shortDescription" placeholder="Enter shortDescription" name="shortDescription" value="{{ old('shortDescription') }}">
-        </div>
-        <div class="form-group">
-            <label for="shortDescription">{{ __('messages.ShortasDescription') }}</label>
-            <select name="category_id" id="">
-                <option value="">{{ __('messages.Select Category') }}</option>
 
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->categoryName }}</option>
-                @endforeach
-
-            </select>
+        <div class="form-group">
+            <label> <input type="checkbox" name="published"> {{__('addCar.publishedTitle')}}</label>
         </div>
-        <div class="checkbox">
-            <label><input type="checkbox" name="published"> {{ __('messages.Published') }}</label>
-        </div>
-        <button type="submit" class="btn btn-default">{{ __('messages.button') }}</button>
+        <button type="submit" class="btn btn-default">{{__('addCar.button')}}</button>
     </form>
 </div>
 

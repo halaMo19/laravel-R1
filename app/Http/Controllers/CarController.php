@@ -42,6 +42,23 @@ class CarController extends Controller
         // $cars->description = $request->description;
         // $data = $request->only($this->columns);
         // $data['published'] = isset($data['published'])? true : false;
+
+        $messages = [
+            'title.required'        => __('addCar.titleRequiredMsg'),
+            'description.required'  => __('addCar.descriptionRequiredMsg'),
+            'description.max'       => __('addCar.descriptionMaxMsg'),
+            'price.required'        => __('addCar.priceRequiredMsg'),
+            'price.numeric'         => __('addCar.priceNumericMsg'),
+            'image.require'         => __('addCar.imageRequiredMsg'),
+            'image.mimes'           => __('addCar.imageMimesMsg'),
+            'image.max'             => __('addCar.imageSizeMsg'),
+            'category_id.required'  => __('addCar.categoryRequiredMsg'),
+        ];
+
+
+
+
+
         $messages= $this->messages();
 
         $data = $request->validate([
